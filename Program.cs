@@ -32,9 +32,19 @@ class Program
         }
         else if (number == 3){
             prompt = "Save your Journal";
-            Console.WriteLine("Which file would you like to save your Journal to? ");
+            Console.WriteLine("To save your journal, type the name of your file in the next line. If the file already exists, your Journal Entries will be added to the bottom of the file. If the file down not exist, it will be created and the entries will be put in it.");
+            Boolean eesSaved = false;
+            do{
+            Console.WriteLine("Which file would you like to save your Journal to? (Should end in .txt or .csv) ");
             string eesUserFile = Console.ReadLine();
+            if (eesUserFile.EndsWith(".txt") || eesUserFile.EndsWith(".csv")){
             EesSaveFile(eesUserFile, eesMyJournal);
+            eesSaved = true;
+            }
+            else{
+                Console.WriteLine("Your chosen file was not a text or csv file. Please try again.");
+            }
+            }while (eesSaved == false);
         }
         else if (number == 4){
             prompt = "Load a file";
