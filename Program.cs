@@ -103,7 +103,7 @@ class Program
             writer.Write(eesMyJournal.FormatJournal());
         }
     }
-    // Load a File (It should return a list of entries in their given dictionaries from a CSV file in the same format that a saved file would be inserted. Olivia S.)
+    // Load a File (Kaden Hansen)
  
     // Exit this program (Done)
     static void Main(string[] args)
@@ -112,8 +112,8 @@ class Program
         string menuPrompt = "";
         do{
         menuPrompt = JTPMenuMethod(eesMyJournal);
-        Console.WriteLine("you have chosen to " + menuPrompt);
-        Console.WriteLine("");}
+        Console.WriteLine("");
+        }
         while(menuPrompt != "Exit this program");
     }
 }
