@@ -2,9 +2,10 @@ public class EesJournal{
     public List<EesEntry> _eesEntry = new List<EesEntry>();
 
     public void DisplayJournal(){
-        
+        Console.WriteLine();
         foreach (EesEntry eesSingleEntry in _eesEntry){
             eesSingleEntry.EesDisplayCompleteEntry();
+            Console.WriteLine();
         }
     }
 
