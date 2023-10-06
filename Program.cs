@@ -6,7 +6,7 @@ using System.Transactions;
 class Program
 {
     // Menu
-    static string JTPMenuMethod(eesMyJournal){
+    static string JTPMenuMethod(EesJournal eesMyJournal){
         
         Console.WriteLine("Welcome to your electronic Journal!");
         Console.WriteLine("Enter 1 to Write");
@@ -59,9 +59,7 @@ class Program
     // New Entry (The Return should be in the form of a dictionary 0 being date 1 being the entry Adam S.)
  
     // Select an Entry (A list of Dates should be created and prompted to the user. After they should be able to select the desired date Lisa H.)
-class LhSelectEntry 
-{
-    static void Main()
+    static void LhSelectEntry()
     {
         //get dat from super
         Console.Write("Enter the date you want to select (MM/DD/YYYY): ");
@@ -97,7 +95,6 @@ class LhSelectEntry
             Console.WriteLine("No Jounral Entry found for the date {0}.", lhDateInput);
         }
     }
-}
  
     // Save Journal (Save the current journal into a CSV file Emma S.)
  static void EesSaveFile(string fileName, EesJournal eesMyJournal){

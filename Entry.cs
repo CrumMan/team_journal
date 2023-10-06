@@ -42,5 +42,6 @@ public class EesEntry{
 
     public string EesCompleteEntry(){
         string fullEntry = $"Date: {_eesDate} - Prompt: {_eesPrompt} \n > {_eesText}";
-
+    return fullEntry;
+}
 }
