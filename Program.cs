@@ -6,8 +6,8 @@ using System.Transactions;
 class Program
 {
     // Menu
-    static string JTPMenuMethod(){
-        EesJournal eesMyJournal = new EesJournal();
+    static string JTPMenuMethod(eesMyJournal){
+        
         Console.WriteLine("Welcome to your electronic Journal!");
         Console.WriteLine("Enter 1 to Write");
         Console.WriteLine("Enter 2 to Display (Save First)");
@@ -101,9 +101,10 @@ class LhSelectEntry
     // Exit this program (Done)
     static void Main(string[] args)
     {
+        EesJournal eesMyJournal = new EesJournal();
         string menuPrompt = "";
         do{
-        menuPrompt = JTPMenuMethod();
+        menuPrompt = JTPMenuMethod(eesMyJournal);
         Console.WriteLine("you have chosen to " + menuPrompt);
         Console.WriteLine("");}
         while(menuPrompt != "Exit this program");
