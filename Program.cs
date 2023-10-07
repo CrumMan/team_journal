@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 using System.Globalization;
 using System.Transactions;
+using System.Security.Cryptography.X509Certificates;
+using System.Linq.Expressions;
 class Program
 {
     // Menu
@@ -33,7 +35,11 @@ class Program
                 
             eesEntry1.EesFormatEntry();
             eesMyJournal._eesEntry.Add(eesEntry1);
+            Console.WriteLine();
             Console.WriteLine("Your entry has been submitted.");
+            Console.Write("Press enter to continue: ");
+            string _ = Console.ReadLine();
+
         }
         else if (number == 2){
              prompt = "Select an entry";
@@ -65,7 +71,18 @@ class Program
             Console.WriteLine("Please follow these instructions:");
             Console.Write("Which file do you wish to load entries from? (include file extension): ");
             string khFileName = Console.ReadLine();
-            khReadFile(khFileName,EesEntry eesMyJournal);
+            var (khQuestions, khAnswers, khDates) = khReadFile(khFileName);
+            EesEntry khEesEntryLoaded = new EesEntry();
+            for (int i = 0; i < khQuestions.Count; i++) {
+                khEesEntryLoaded._eesDate = khDates[i];
+                khEesEntryLoaded._eesPrompt = khQuestions[i];
+                khEesEntryLoaded._eesText = khAnswers[i];
+                eesMyJournal._eesEntry.Add(khEesEntryLoaded);
+            }
+            Console.WriteLine();
+            Console.WriteLine($"Your entries from {khFileName} have been loaded successfully.");
+            Console.Write("Press enter to continue: ");
+            string _ = Console.ReadLine();
 
         }
         else if (number == 5){
@@ -121,7 +138,8 @@ class Program
         }
     }
 
-    static void khReadFile(string khFilename)
+    // Load a File (Kaden Hansen)
+    static (List<string>, List<string>, List<string>) khReadFile(string khFilename)
     {
         List<string> khLines = new List<string>();
 
@@ -171,61 +189,15 @@ class Program
               }
             }
             else if (khLine.StartsWith('>')) {
-                khLine = khLine.Remove(0, 1); // Remove the first character, which is '>'
+                khLine = khLine.Remove(0, 1);
                 string khAnswer = khLine.Trim();
                 khAnswersList.Add(khAnswer);
                 }
 
         }
-
-        khDisplayChosenDate(khQuestionsList, khAnswersList, khDatesList, khFilename);
+            
+        return (khQuestionsList, khAnswersList, khDatesList);
     }
-
-    static void khDisplayChosenDate(List<string> khQuestions, List<string> khAnswers, List<string> khDates, string khFileName) {
-        Console.WriteLine();
-        Console.WriteLine("Available Journal Entry Dates:");
-        Console.WriteLine("-------------");
-        int khListNum = 1;
-        foreach (string khDatey in khDates) {
-            Console.WriteLine($"{khListNum}. {khDatey}");
-            khListNum = khListNum + 1;
-        }
-        Console.WriteLine("-------------");
-        Console.Write("Choose the date you would like to see the entries for (whole list numbers only): ");
-        int khChosenDate = Convert.ToInt32(Console.ReadLine());
-        string khDate = khDates[khChosenDate - 1];
-        string khQuestion = khQuestions[khChosenDate - 1];
-        string khAnswer = khAnswers[khChosenDate - 1];
-        Console.WriteLine();
-        if (khChosenDate >= 11 && khChosenDate <= 13)
-        {
-            Console.WriteLine($"On {khDate}, you chose to write this {khChosenDate}th journal entry in {khFileName}. It reads as follows:");
-        }
-        else if (khChosenDate % 10 == 1)
-        {
-            Console.WriteLine($"On {khDate}, you chose to write this {khChosenDate}st journal entry in {khFileName}. It reads as follows:");
-        }
-        else if (khChosenDate % 10 == 2)
-        {
-            Console.WriteLine($"On {khDate}, you chose to write this {khChosenDate}nd journal entry in {khFileName}. It reads as follows:");
-        }
-        else if (khChosenDate % 10 == 3)
-        {
-            Console.WriteLine($"On {khDate}, you chose to write this {khChosenDate}rd journal entry in {khFileName}. It reads as follows:");
-        }
-        else
-        {
-            Console.WriteLine($"On {khDate}, you chose to write this {khChosenDate}th journal entry in {khFileName}. It reads as follows:");
-        }
-        Console.WriteLine($"Q: {khQuestion}:");
-        Console.WriteLine($"A: {khAnswer}");
-        Console.Write("Press enter to continue: ");
-        string _ = Console.ReadLine();
-
-    }
-
-    
-    // Load a File (Kaden Hansen)
  
     // Exit this program (Done)
     static void Main(string[] args)
