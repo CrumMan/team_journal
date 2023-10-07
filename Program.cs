@@ -13,18 +13,21 @@ class Program
         Console.WriteLine("             Actions:            ");
         Console.WriteLine("----------------------------------");
         Console.WriteLine("Enter 1 to Write");
-        Console.WriteLine("Enter 2 to Display (Save First)");
+        Console.WriteLine("Enter 2 to Display");
         Console.WriteLine("Enter 3 to Save");
         Console.WriteLine("Enter 4 to Load");
         Console.WriteLine("Enter 5 to Exit");
         Console.WriteLine("----------------------------------");
         string prompt = "";
         do{
-        int number=Convert.ToInt32(Console.ReadLine());
+            Console.Write("Enter action: ");
+        int number = Convert.ToInt32(Console.ReadLine());
         if (number == 1){
-             prompt = "You chose to create a new entry.";
+            prompt = "You chose to create a new entry.";
             Console.WriteLine(prompt);
-           EesEntry eesEntry1 = new EesEntry();
+            Console.WriteLine();
+            Console.WriteLine("Please answer the following question:");
+            EesEntry eesEntry1 = new EesEntry();
             int eesPromptNumber = eesEntry1.EesChoosePrompt();
              eesEntry1._eesPrompt = eesEntry1.EesPrompts[eesPromptNumber];
                 
@@ -33,11 +36,13 @@ class Program
             Console.WriteLine("Your entry has been submitted.");
         }
         else if (number == 2){
-            prompt = "Select an entry";
-            eesMyJournal.DisplayJournal();
+             prompt = "Select an entry";
+                        eesMyJournal.DisplayJournal();
         }
         else if (number == 3){
-            prompt = "Save your Journal";
+            prompt = "You chose to save your journal entry.";
+            Console.WriteLine(prompt);
+            Console.WriteLine();
             Console.WriteLine("To save your journal, type the name of your file in the next line. If the file already exists, your Journal Entries will be added to the bottom of the file. If the file down not exist, it will be created and the entries will be put in it.");
             Boolean eesSaved = false;
             do{
@@ -60,7 +65,7 @@ class Program
             Console.WriteLine("Please follow these instructions:");
             Console.Write("Which file do you wish to load entries from? (include file extension): ");
             string khFileName = Console.ReadLine();
-            khReadFile(khFileName);
+            khReadFile(khFileName,EesEntry eesMyJournal);
 
         }
         else if (number == 5){
