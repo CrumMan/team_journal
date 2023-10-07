@@ -56,9 +56,7 @@ class Program
         while (prompt == "");
         return prompt;
     }
-    // New Entry (The Return should be in the form of a dictionary 0 being date 1 being the entry Adam S.)
- 
-    // Select an Entry (A list of Dates should be created and prompted to the user. After they should be able to select the desired date Lisa H.)
+   
     static void LhSelectEntry()
     {
         //get dat from super
