@@ -1,3 +1,9 @@
+//Name: My Journal
+//Purpose: The purpose of this program is to allow the user to record journal entries according to certain prompts, 
+//the user may load and display journal entries later, as well as save and exit the program.
+//Team: Lisa Heinhold, Kaden Hansen, Joshua Pyle, Emma Shurtliff, Adam Schwartz, and Olivia Smart.
+//Date: 10/7/2023
+
 using System;
 using System.IO;
 using System.Linq;
@@ -56,7 +62,10 @@ class Program
             string eesUserFile = Console.ReadLine();
             if (eesUserFile.EndsWith(".txt") || eesUserFile.EndsWith(".csv")){
             EesSaveFile(eesUserFile, eesMyJournal);
+            Console.WriteLine();
             Console.Write("Your Journal has been saved");
+            Console.Write("Press enter to continue: ");
+            string _ = Console.ReadLine();
             eesSaved = true;
             }
             else{
