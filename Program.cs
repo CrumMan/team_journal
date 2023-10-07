@@ -1,9 +1,3 @@
-//Name: My Journal
-//Purpose: The purpose of this program is to allow the user to record journal entries according to certain prompts, 
-//the user may load and display journal entries later, as well as save and exit the program.
-//Team: Lisa Heinhold, Kaden Hansen, Joshua Pyle, Emma Shurtliff, Adam Schwartz, and Olivia Smart.
-//Date: 10/7/2023
-
 using System;
 using System.IO;
 using System.Linq;
@@ -78,8 +72,8 @@ class Program
             Console.Write("Which file do you wish to load entries from? (include file extension): ");
             string khFileName = Console.ReadLine();
             var (khQuestions, khAnswers, khDates) = khReadFile(khFileName);
-            EesEntry khEesEntryLoaded = new EesEntry();
             for (int i = 0; i < khQuestions.Count; i++) {
+                EesEntry khEesEntryLoaded = new EesEntry();
                 khEesEntryLoaded._eesDate = khDates[i];
                 khEesEntryLoaded._eesPrompt = khQuestions[i];
                 khEesEntryLoaded._eesText = khAnswers[i];
@@ -199,6 +193,15 @@ class Program
                 string khAnswer = khLine.Trim();
                 khAnswersList.Add(khAnswer);
                 }
+            else if (khLine == "") {
+                continue;
+            }
+            else {
+                Console.WriteLine("The file you gave contains text that is not in the journal format.");
+                Console.Write("Press enter to continue: ");
+                string _  = Console.ReadLine();
+                break;
+            }
 
         }
             
