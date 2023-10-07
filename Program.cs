@@ -9,22 +9,28 @@ class Program
     static string JTPMenuMethod(EesJournal eesMyJournal){
         
         Console.WriteLine("Welcome to your electronic Journal!");
+        Console.WriteLine();
+        Console.WriteLine("             Actions:            ");
+        Console.WriteLine("----------------------------------");
         Console.WriteLine("Enter 1 to Write");
         Console.WriteLine("Enter 2 to Display (Save First)");
         Console.WriteLine("Enter 3 to Save");
         Console.WriteLine("Enter 4 to Load");
         Console.WriteLine("Enter 5 to Exit");
+        Console.WriteLine("----------------------------------");
         string prompt = "";
         do{
         int number=Convert.ToInt32(Console.ReadLine());
         if (number == 1){
-            prompt = "Create an Entry";
+             prompt = "You chose to create a new entry.";
+            Console.WriteLine(prompt);
            EesEntry eesEntry1 = new EesEntry();
             int eesPromptNumber = eesEntry1.EesChoosePrompt();
              eesEntry1._eesPrompt = eesEntry1.EesPrompts[eesPromptNumber];
                 
             eesEntry1.EesFormatEntry();
             eesMyJournal._eesEntry.Add(eesEntry1);
+            Console.WriteLine("Your entry has been submitted.");
         }
         else if (number == 2){
             prompt = "Select an entry";
@@ -39,6 +45,7 @@ class Program
             string eesUserFile = Console.ReadLine();
             if (eesUserFile.EndsWith(".txt") || eesUserFile.EndsWith(".csv")){
             EesSaveFile(eesUserFile, eesMyJournal);
+            Console.Write("Your Journal has been saved");
             eesSaved = true;
             }
             else{
@@ -47,7 +54,14 @@ class Program
             }while (eesSaved == false);
         }
         else if (number == 4){
-            prompt = "Load a file";
+            prompt = "You chose to load a file";
+            Console.WriteLine(prompt);
+            Console.WriteLine();
+            Console.WriteLine("Please follow these instructions:");
+            Console.Write("Which file do you wish to load entries from? (include file extension): ");
+            string khFileName = Console.ReadLine();
+            khReadFile(khFileName);
+
         }
         else if (number == 5){
             prompt = "Exit this program";
@@ -101,6 +115,111 @@ class Program
             writer.Write(eesMyJournal.FormatJournal());
         }
     }
+
+    static void khReadFile(string khFilename)
+    {
+        List<string> khLines = new List<string>();
+
+        try
+        {
+            // Read the file and store each line in the list
+            using (StreamReader reader = new StreamReader(khFilename))
+            {
+                string khLine;
+                while ((khLine = reader.ReadLine()) != null)
+                {
+                    khLine = khLine.TrimStart();
+                    if (khLine.StartsWith('D')) {
+                        khLine = khLine.Replace("Date: ", "").Replace("Prompt: ", "");
+                    }
+                    if (!string.IsNullOrWhiteSpace(khLine))
+                        {
+                        khLines.Add(khLine);
+                        }
+                }
+            }
+        }
+        catch (FileNotFoundException ex)
+        {
+            // Handle file not found error
+            Console.WriteLine($"Error reading file: {ex.Message}");
+        }
+        
+        List<string> khQuestionsList = new List<string>();
+        List<string> khAnswersList = new List<string>();
+        List<string> khDatesList = new List<string>();
+        foreach (string khEntryLine in khLines)
+        {
+            string khLine = khEntryLine.Trim();
+            if (char.IsDigit(khLine[0])) {
+                string[] khSplitQuestionLine = khEntryLine.Split('-');
+                foreach (string khSplitQuestionString in khSplitQuestionLine) {
+                    string khSplitString = khSplitQuestionString.Trim(); 
+                    if (char.IsDigit(khSplitString[0])) {
+                        string khDate = khSplitString;
+                        khDatesList.Add(khDate);
+                }
+            else if (khSplitString.EndsWith("?")) {
+                string khQuestion = khSplitString;
+                khQuestionsList.Add(khQuestion);
+            }
+              }
+            }
+            else if (khLine.StartsWith('>')) {
+                khLine = khLine.Remove(0, 1); // Remove the first character, which is '>'
+                string khAnswer = khLine.Trim();
+                khAnswersList.Add(khAnswer);
+                }
+
+        }
+
+        khDisplayChosenDate(khQuestionsList, khAnswersList, khDatesList, khFilename);
+    }
+
+    static void khDisplayChosenDate(List<string> khQuestions, List<string> khAnswers, List<string> khDates, string khFileName) {
+        Console.WriteLine();
+        Console.WriteLine("Available Journal Entry Dates:");
+        Console.WriteLine("-------------");
+        int khListNum = 1;
+        foreach (string khDatey in khDates) {
+            Console.WriteLine($"{khListNum}. {khDatey}");
+            khListNum = khListNum + 1;
+        }
+        Console.WriteLine("-------------");
+        Console.Write("Choose the date you would like to see the entries for (whole list numbers only): ");
+        int khChosenDate = Convert.ToInt32(Console.ReadLine());
+        string khDate = khDates[khChosenDate - 1];
+        string khQuestion = khQuestions[khChosenDate - 1];
+        string khAnswer = khAnswers[khChosenDate - 1];
+        Console.WriteLine();
+        if (khChosenDate >= 11 && khChosenDate <= 13)
+        {
+            Console.WriteLine($"On {khDate}, you chose to write this {khChosenDate}th journal entry in {khFileName}. It reads as follows:");
+        }
+        else if (khChosenDate % 10 == 1)
+        {
+            Console.WriteLine($"On {khDate}, you chose to write this {khChosenDate}st journal entry in {khFileName}. It reads as follows:");
+        }
+        else if (khChosenDate % 10 == 2)
+        {
+            Console.WriteLine($"On {khDate}, you chose to write this {khChosenDate}nd journal entry in {khFileName}. It reads as follows:");
+        }
+        else if (khChosenDate % 10 == 3)
+        {
+            Console.WriteLine($"On {khDate}, you chose to write this {khChosenDate}rd journal entry in {khFileName}. It reads as follows:");
+        }
+        else
+        {
+            Console.WriteLine($"On {khDate}, you chose to write this {khChosenDate}th journal entry in {khFileName}. It reads as follows:");
+        }
+        Console.WriteLine($"Q: {khQuestion}:");
+        Console.WriteLine($"A: {khAnswer}");
+        Console.Write("Press enter to continue: ");
+        string _ = Console.ReadLine();
+
+    }
+
+    
     // Load a File (Kaden Hansen)
  
     // Exit this program (Done)
