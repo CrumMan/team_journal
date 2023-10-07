@@ -9,11 +9,15 @@ class Program
     static string JTPMenuMethod(EesJournal eesMyJournal){
         
         Console.WriteLine("Welcome to your electronic Journal!");
+        Console.WriteLine();
+        Console.WriteLine("             Actions:            ");
+        Console.WriteLine("----------------------------------");
         Console.WriteLine("Enter 1 to Write");
         Console.WriteLine("Enter 2 to Display (Save First)");
         Console.WriteLine("Enter 3 to Save");
         Console.WriteLine("Enter 4 to Load");
         Console.WriteLine("Enter 5 to Exit");
+        Console.WriteLine("----------------------------------");
         string prompt = "";
         do{
         int number=Convert.ToInt32(Console.ReadLine());
@@ -25,6 +29,7 @@ class Program
                 
             eesEntry1.EesFormatEntry();
             eesMyJournal._eesEntry.Add(eesEntry1);
+            Console.WriteLine("Your entry has been submitted.");
         }
         else if (number == 2){
             prompt = "Select an entry";
