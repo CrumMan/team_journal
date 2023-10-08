@@ -77,21 +77,46 @@ class Program
             prompt = "You chose to load a file";
             Console.WriteLine(prompt);
             Console.WriteLine();
-            Console.WriteLine("Please follow these instructions:");
-            Console.Write("Which file do you wish to load entries from? (include file extension): ");
-            string khFileName = Console.ReadLine();
-            var (khQuestions, khAnswers, khDates) = khReadFile(khFileName);
-            for (int i = 0; i < khQuestions.Count; i++) {
-                EesEntry khEesEntryLoaded = new EesEntry();
-                khEesEntryLoaded._eesDate = khDates[i];
-                khEesEntryLoaded._eesPrompt = khQuestions[i];
-                khEesEntryLoaded._eesText = khAnswers[i];
-                eesMyJournal._eesEntry.Add(khEesEntryLoaded);
-            }
-            Console.WriteLine();
-            Console.WriteLine($"Your entries from {khFileName} have been loaded successfully.");
-            Console.Write("Press enter to continue: ");
-            string _ = Console.ReadLine();
+
+            Console.WriteLine("Please choose one of these options:");
+            Console.WriteLine("1. view one past entry from a file.");
+            Console.WriteLine("2. Load all entries from a file to display with all new entries.");
+            Boolean eesCorrectChoice = true;
+            do {
+                Console.WriteLine("Which option would you like to choose?");
+                int eesLoadChoice = Convert.ToInt32(Console.ReadLine());
+
+                if (eesLoadChoice == 1){
+                    Console.WriteLine("Which file do you wish to load entries from? (include file extension): ");
+                    string lhFilePath = Console.ReadLine();
+                    LhSelectEntry(lhFilePath);
+
+                    Console.Write("Press enter to continue: ");
+                    string _ = Console.ReadLine();
+                    eesCorrectChoice = true;
+                }
+                else if (eesLoadChoice == 2){
+                    Console.WriteLine("Please follow these instructions:");
+                    Console.Write("Which file do you wish to load entries from? (include file extension): ");
+                    string khFileName = Console.ReadLine();
+                    var (khQuestions, khAnswers, khDates) = khReadFile(khFileName);
+                    for (int i = 0; i < khQuestions.Count; i++) {
+                        EesEntry khEesEntryLoaded = new EesEntry();
+                        khEesEntryLoaded._eesDate = khDates[i];
+                        khEesEntryLoaded._eesPrompt = khQuestions[i];
+                        khEesEntryLoaded._eesText = khAnswers[i];
+                        eesMyJournal._eesEntry.Add(khEesEntryLoaded);
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine($"Your entries from {khFileName} have been loaded successfully.");
+                    Console.Write("Press enter to continue: ");
+                    string _ = Console.ReadLine();
+                    eesCorrectChoice = true;
+                }
+                else{
+                    Console.WriteLine("Sorry, your responce was not an option. Please try again.");    
+                }
+            }while (eesCorrectChoice == false);
 
         }
         else if (number == 5){
@@ -102,7 +127,7 @@ class Program
         return prompt;
     }
    
-    static void LhSelectEntry()
+    static void LhSelectEntry(string lhFilePath)
     {
         //get dat from super
         Console.Write("Enter the date you want to select (MM/DD/YYYY): ");
@@ -114,7 +139,7 @@ class Program
             return;
         }
         //look for file
-        string lhFilePath = "journal.csv";
+
         //check to see if file exists
         if (!File.Exists(lhFilePath))
         {
@@ -127,10 +152,13 @@ class Program
         //if entry found display date, prompt, entry
         if (LhEntry != null)
         {
-            var LhFeilds = LhEntry.Split(',');
-            Console.WriteLine("Date: {0}", LhFeilds[0]);
-            Console.WriteLine("Prompt: {0}", LhFeilds[1]);
-            Console.WriteLine("Journal entry: {0}", LhFeilds[2]);
+            int eesIndex = LhLines.ToList().IndexOf(LhEntry);
+            string LhBelowEntry = LhLines.ElementAt(eesIndex +1);
+            LhEntry = LhEntry + LhBelowEntry;
+            var LhFeilds = LhEntry.Split(new char []{',', '-','>'});
+            Console.WriteLine("Date: {0}", LhFeilds[1]);
+            Console.WriteLine("Prompt: {0}", LhFeilds[3]);
+            Console.WriteLine("Journal entry: {0}", LhFeilds[4]);
         }
         else
         {
