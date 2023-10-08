@@ -8,19 +8,19 @@
     "net7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\pvtjo\\.nuget\\packages\\": {}
+    "C:\\Users\\garfu\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\projects\\team_journal\\Sandbox.csproj",
+      "projectUniqueName": "C:\\Users\\garfu\\OneDrive\\Documents\\GitHub\\team_journal\\Sandbox.csproj",
       "projectName": "Sandbox",
-      "projectPath": "C:\\projects\\team_journal\\Sandbox.csproj",
-      "packagesPath": "C:\\Users\\pvtjo\\.nuget\\packages\\",
-      "outputPath": "C:\\projects\\team_journal\\obj\\",
+      "projectPath": "C:\\Users\\garfu\\OneDrive\\Documents\\GitHub\\team_journal\\Sandbox.csproj",
+      "packagesPath": "C:\\Users\\garfu\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\garfu\\OneDrive\\Documents\\GitHub\\team_journal\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\pvtjo\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\garfu\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"

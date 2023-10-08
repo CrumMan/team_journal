@@ -50,6 +50,8 @@ class Program
         else if (action == "2"){
              prompt = "Select an entry";
                         eesMyJournal.DisplayJournal();
+            Console.Write("Press enter to continue: ");
+            string _ = Console.ReadLine();
         }
         else if (action == "3"){
             prompt = "You chose to save your journal entry.";
@@ -63,7 +65,7 @@ class Program
             if (eesUserFile.EndsWith(".txt") || eesUserFile.EndsWith(".csv")){
             EesSaveFile(eesUserFile, eesMyJournal);
             Console.WriteLine();
-            Console.Write("Your Journal has been saved");
+            Console.WriteLine("Your Journal has been saved");
             Console.Write("Press enter to continue: ");
             string _ = Console.ReadLine();
             eesSaved = true;
